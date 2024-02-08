@@ -1,6 +1,7 @@
 export default defineEventHandler(async (event) => {
   const ipHeader = getHeader(event, "x-forwarded-for");
   const ip = ipHeader ? ipHeader.split(",")[0] : "-";
+  //* If the IP is localhost, return a hardcoded value
   if (ip === "127.0.0.1") {
     return {
       city: "Localhost",
@@ -9,10 +10,7 @@ export default defineEventHandler(async (event) => {
   }
   const url = `https://ipapi.co/${ip}/json/`;
   try {
-    const { city } = await $fetch<{
-      city: string;
-    }>(url);
-
+    const { city } = await $fetch<{ city: string }>(url);
     return {
       city,
       ip,

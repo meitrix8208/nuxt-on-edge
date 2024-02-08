@@ -44,7 +44,7 @@ const generatedAt = useState(() => new Date().toISOString());
         content="https://nuxt-on-the-edge.vercel.app/og-card.png"
       />
     </Head>
-    <div style="height: 100%">
+    <div style="height: 100dvh">
       <AppBackground />
       <main>
         <h1>Hello from the edge!</h1>
