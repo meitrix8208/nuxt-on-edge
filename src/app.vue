@@ -65,9 +65,6 @@ const generatedAt = useState(() => new Date().toISOString());
               >
                 {{ info?.city }}
               </strong>
-              <strong>
-                {{ info?.ip2 === null ? info.ip2 : "N/A" }}
-              </strong>
             </div>
           </div>
 
@@ -107,7 +104,7 @@ const generatedAt = useState(() => new Date().toISOString());
       </p>
       <NuxtLink
         target="_blank"
-        href="https://github.com/pi0/nuxt-on-the-edge"
+        href="https://github.com/meitrix8208/nuxt-on-edge"
         class="source"
       >
         <LogoGithub />

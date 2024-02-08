@@ -1,6 +1,5 @@
 export default defineEventHandler(async (event) => {
   const ipHeader = getHeader(event, "x-forwarded-for");
-  const headers = getHeaders(event);
   const ip = ipHeader ? ipHeader.split(",")[0] : "-";
   //* If the IP is localhost, return a hardcoded value
   if (ip === "127.0.0.1") {
@@ -15,8 +14,6 @@ export default defineEventHandler(async (event) => {
     return {
       city,
       ip,
-      headers,
-      context: event.context,
     };
   } catch (error) {
     throw createError({
