@@ -1,5 +1,9 @@
 <script setup lang="ts">
-const { data: info } = await useFetch("/api/info");
+const { data: info } = await useFetch<{
+  ip: string;
+  city: string;
+  ip2: string;
+}>("/api/info");
 const generatedAt = useState(() => new Date().toISOString());
 </script>
 
@@ -61,6 +65,9 @@ const generatedAt = useState(() => new Date().toISOString());
               >
                 {{ info?.city }}
               </strong>
+              <strong>
+                {{ info?.ip2 === null ? info.ip2 : "N/A" }}
+              </strong>
             </div>
           </div>
 
@@ -81,7 +88,7 @@ const generatedAt = useState(() => new Date().toISOString());
           href="https://www.netlify.com/"
           aria-label="Netlify"
         >
-          <LogoNetlify class="net"/>
+          <LogoNetlify class="net" />
         </a>
       </p>
       <p class="details">
@@ -324,7 +331,7 @@ svg.card {
   overflow: visible;
 }
 .net {
-  scale: 2.5
+  scale: 2.5;
 }
 
 .card .satellite {

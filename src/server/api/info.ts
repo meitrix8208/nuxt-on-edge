@@ -1,6 +1,8 @@
 export default defineEventHandler(async (event) => {
   const ipHeader = getHeader(event, "x-forwarded-for");
+  const netlifyIp = getHeader(event, "client-ip");
   const ip = ipHeader ? ipHeader.split(",")[0] : "-";
+  const ip2 = netlifyIp ? netlifyIp.split(",")[0] : "-";
   //* If the IP is localhost, return a hardcoded value
   if (ip === "127.0.0.1") {
     return {
@@ -12,8 +14,10 @@ export default defineEventHandler(async (event) => {
   try {
     const { city } = await $fetch<{ city: string }>(url);
     return {
+      netlifyIp,
       city,
       ip,
+      ip2,
     };
   } catch (error) {
     throw createError({
