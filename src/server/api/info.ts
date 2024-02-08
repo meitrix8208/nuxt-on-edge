@@ -18,6 +18,7 @@ export default defineEventHandler(async (event) => {
       city,
       ip,
       ip2,
+      headers: event.headers,
     };
   } catch (error) {
     throw createError({
