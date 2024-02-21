@@ -37,7 +37,7 @@ const generatedAt = useState(() => new Date().toISOString());
       />
       <Meta
         name="twitter:image"
-        content="https://nuxt-on-the-edge.vercel.app/og-card.png"
+        content="https://nuxt-on-edge.netlify.app/og-card.png"
       />
       <Meta
         name="twitter:image:alt"
@@ -45,7 +45,7 @@ const generatedAt = useState(() => new Date().toISOString());
       />
       <Meta
         name="og:image"
-        content="https://nuxt-on-the-edge.vercel.app/og-card.png"
+        content="https://nuxt-on-edge.netlify.app/og-card.png"
       />
     </Head>
     <div style="height: 100dvh">
