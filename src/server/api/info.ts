@@ -1,7 +1,5 @@
 export default defineEventHandler(async (event) => {
   const ipHeader = getHeader(event, "x-forwarded-for");
-  const ipnetlify = getHeader(event, "client-ip");
-  const ipnetlify2 = getHeader(event, " x-nf-client-connection-ip");
   const ip = ipHeader ? ipHeader.split(",")[0] : "-";
   //* If the IP is localhost, return a hardcoded value
   if (ip === "127.0.0.1") {
@@ -16,8 +14,10 @@ export default defineEventHandler(async (event) => {
     return {
       city,
       ip,
-      ipnetlify,
-      ipnetlify2,
+      getRequestIP: getRequestIP(event, {
+        xForwardedFor: true,
+      }),
+      headers: getRequestHeaders(event),
     };
   } catch (error) {
     throw createError({
