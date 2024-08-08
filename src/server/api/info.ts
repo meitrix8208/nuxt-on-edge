@@ -1,6 +1,7 @@
 export default defineEventHandler(async (event) => {
-  const ipHeader = getHeader(event, "x-forwarded-for");
-  const ip = ipHeader ? ipHeader.split(",")[0] : "-";
+  const ip = getRequestIP(event, {
+    xForwardedFor: true,
+  });
   //* If the IP is localhost, return a hardcoded value
   if (ip === "127.0.0.1") {
     return {
@@ -8,16 +9,15 @@ export default defineEventHandler(async (event) => {
       ip,
     };
   }
-  const url = `https://ipapi.co/${ip}/json/`;
+
+  const url = `https://ip.guide/${ip}`;
   try {
-    const { city } = await $fetch<{ city: string }>(url);
+    const { location: { city } } = await $fetch<{ location: { city: string } }>(url, {
+      responseType: "json",
+    });
     return {
       city,
       ip,
-      getRequestIP: getRequestIP(event, {
-        xForwardedFor: true,
-      }),
-      headers: getRequestHeaders(event),
     };
   } catch (error) {
     throw createError({

@@ -30,8 +30,8 @@ const generatedAt = useState(() => new Date().toISOString());
             <div class="contents">
               <span>Your city</span>
               <strong :title="info?.ip === '-'
-                  ? 'GeoIP information could not be derived from your IP'
-                  : undefined
+                ? 'GeoIP information could not be derived from your IP'
+                : undefined
                 ">
                 {{ info?.city }}
               </strong>
@@ -164,9 +164,15 @@ main .block span {
 
 main .block strong {
   display: block;
-  font-size: 1em;
+  font-size: 1.4em;
   margin: 0;
   font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  main .block strong {
+    font-size: 1em;
+  }
 }
 
 main .block strong.na {
