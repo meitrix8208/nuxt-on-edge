@@ -2,6 +2,7 @@
   <svg
     class="card"
     viewBox="0 50 840 440"
+    style="transform: scale(0.7);"
   >
     <defs>
       <linearGradient
