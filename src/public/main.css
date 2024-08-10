@@ -104,7 +104,7 @@ main .block strong {
   }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 600px) {
   main .block strong {
     font-size: 0.85em;
   }
