@@ -1,4 +1,7 @@
+import { useNuxtApp } from "nuxt/app";
+
 export default defineEventHandler(async (event) => {
+  
   const ip = getRequestIP(event, {
     xForwardedFor: true,
   });
@@ -9,22 +12,6 @@ export default defineEventHandler(async (event) => {
       ip,
     };
   }
-
-// ~ ----------------------------------
-  const headers = getRequestHeaders(event);
-
-  let geo = {error: "No geo information available"} as any;
-  if (headers) {
-    try {
-      geo = headers
-    }
-    catch (error) {
-      geo = { error };
-      console.error("Failed to parse geo information:", error);
-    }
-  }
-// ~ ----------------------------------
-
   const url = `https://ip.guide/${ip}`;
   try {
     const { location: { city } } = await $fetch<{ location: { city: string } }>(url, {
@@ -33,7 +20,6 @@ export default defineEventHandler(async (event) => {
     return {
       city,
       ip,
-      geo,
     };
   } catch (error) {
     throw createError({
