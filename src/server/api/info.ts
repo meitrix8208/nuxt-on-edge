@@ -14,9 +14,9 @@ export default defineEventHandler(async (event) => {
   const headers = getRequestHeaders(event);
 
   let geo = {error: "No geo information available"} as any;
-  if (headers["x-nf-geo"]) {
+  if (headers) {
     try {
-      geo = JSON.parse(Buffer.from(headers["x-nf-geo"], "base64").toString("utf-8"));
+      geo = headers
     }
     catch (error) {
       geo = { error };
