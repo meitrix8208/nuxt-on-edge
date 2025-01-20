@@ -10,6 +10,21 @@ export default defineEventHandler(async (event) => {
     };
   }
 
+// ~ ----------------------------------
+  const headers = getRequestHeaders(event);
+
+  let geo = {error: "No geo information available"} as any;
+  if (headers["x-nf-geo"]) {
+    try {
+      geo = JSON.parse(Buffer.from(headers["x-nf-geo"], "base64").toString("utf-8"));
+    }
+    catch (error) {
+      geo = { error };
+      console.error("Failed to parse geo information:", error);
+    }
+  }
+// ~ ----------------------------------
+
   const url = `https://ip.guide/${ip}`;
   try {
     const { location: { city } } = await $fetch<{ location: { city: string } }>(url, {
@@ -18,6 +33,7 @@ export default defineEventHandler(async (event) => {
     return {
       city,
       ip,
+      geo,
     };
   } catch (error) {
     throw createError({
