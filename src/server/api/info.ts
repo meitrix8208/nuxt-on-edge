@@ -11,8 +11,12 @@ export default defineEventHandler(async (event) => {
       headers
     };
   }
-  
+
   const url = `https://ip.guide/${ip}`;
+  // headers["x-nf-geo"] 
+  headers["x-nf-geo"] = headers["x-nf-geo"] || "eyJkYXRhIjp7ImNpdHkiOiJNYXJrZW5lIn19";
+  const geo = JSON.parse(Buffer.from(headers["x-nf-geo"], "base64").toString("utf-8"));
+
   try {
     const { location: { city } } = await $fetch<{ location: { city: string } }>(url, {
       responseType: "json",
@@ -20,7 +24,8 @@ export default defineEventHandler(async (event) => {
     return {
       city,
       ip,
-      headers
+      headers, 
+      geo
     };
   } catch (error) {
     throw createError({
