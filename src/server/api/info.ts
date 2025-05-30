@@ -1,5 +1,9 @@
 const { preset } = useRuntimeConfig();
 export default defineEventHandler(async (event) => {
+        const { location: { city } } = await $fetch<{ location: { city: string } }>("https://ip.guide/2800:e2:467f:e78c:b831:7d2:5147:bb3c", {
+        responseType: "json",
+      });
+     console.log(city);
   if (preset !== "netlify-edge") {
     const ip = getRequestIP(event, {
       xForwardedFor: true,
@@ -17,6 +21,7 @@ export default defineEventHandler(async (event) => {
       const { location: { city } } = await $fetch<{ location: { city: string } }>(url, {
         responseType: "json",
       });
+      console.log(city);
       return {
         city,
         ip,
@@ -60,6 +65,7 @@ export default defineEventHandler(async (event) => {
         city,
         ip,
         preset,
+        headers,
       };
     } catch (error) {
       throw createError({
