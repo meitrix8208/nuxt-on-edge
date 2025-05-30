@@ -1,41 +1,6 @@
 const { preset } = useRuntimeConfig();
 export default defineEventHandler(async (event) => {
-        const { location: { city } } = await $fetch<{ location: { city: string } }>("https://ip.guide/2800:e2:467f:e78c:b831:7d2:5147:bb3c", {
-        responseType: "json",
-      });
-     console.log(city);
   if (preset !== "netlify-edge") {
-    const ip = getRequestIP(event, {
-      xForwardedFor: true,
-    });
-    //* If the IP is localhost, return a hardcoded value
-    if (ip === "127.0.0.1") {
-      return {
-        city: "Localhost",
-        ip,
-      };
-    }
-
-    const url = `https://ip.guide/${ip}`;
-    try {
-      const { location: { city } } = await $fetch<{ location: { city: string } }>(url, {
-        responseType: "json",
-      });
-      console.log(city);
-      return {
-        city,
-        ip,
-        preset,
-      };
-    } catch (error) {
-      throw createError({
-        statusCode: 500,
-        message: "Failed to fetch data",
-        data: error,
-      });
-    }
-  } else {
-
     interface Geo {
       city: string;
     }
@@ -71,6 +36,37 @@ export default defineEventHandler(async (event) => {
       throw createError({
         statusCode: 500,
         message: "Failed to get geo data",
+        data: error,
+      });
+    }
+
+  } else {
+    const ip = getRequestIP(event, {
+      xForwardedFor: true,
+    });
+    //* If the IP is localhost, return a hardcoded value
+    if (ip === "127.0.0.1") {
+      return {
+        city: "Localhost",
+        ip,
+      };
+    }
+
+    const url = `https://ip.guide/${ip}`;
+    try {
+      const { location: { city } } = await $fetch<{ location: { city: string } }>(url, {
+        responseType: "json",
+      });
+      console.log(city);
+      return {
+        city,
+        ip,
+        preset,
+      };
+    } catch (error) {
+      throw createError({
+        statusCode: 500,
+        message: "Failed to fetch data",
         data: error,
       });
     }
