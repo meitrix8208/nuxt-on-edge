@@ -9,8 +9,6 @@ export default defineNuxtConfig({
   },
   runtimeConfig:{
     preset: PRESET,
-    // public:{
-    //   preset: PRESET,
-    // }
+
   }
 });

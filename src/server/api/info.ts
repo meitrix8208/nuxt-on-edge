@@ -20,6 +20,7 @@ export default defineEventHandler(async (event) => {
       return {
         city,
         ip,
+        preset,
       };
     } catch (error) {
       throw createError({
@@ -58,6 +59,7 @@ export default defineEventHandler(async (event) => {
       return {
         city,
         ip,
+        preset,
       };
     } catch (error) {
       throw createError({
